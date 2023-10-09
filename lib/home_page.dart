@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:git_practice/login_page.dart';
 import 'package:git_practice/models/details_model.dart';
 import 'package:git_practice/models/response_model.dart';
+import 'package:git_practice/repo_details_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -34,11 +35,9 @@ class _HomePageState extends State<HomePage> {
       setState(() {});
       detailsResponse();
     } else {
-      throw Exception(
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Failed with StatusCode ${res.statusCode}"),
-          ),
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed with StatusCode ${res.statusCode}"),
         ),
       );
     }
@@ -119,16 +118,23 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 final items = repos?.items?[index];
                 return Padding(
-                  padding: EdgeInsets.only(bottom: 5,left: 10,right: 10),
+                  padding: EdgeInsets.only(bottom: 5, left: 10, right: 10),
                   child: InkWell(
                     onTap: () {
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => RepositoryDetails(
+                            projectName: items?.name ?? "",
+                          ),
+                        ),
+                      );
                     },
                     child: ListTile(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       style: ListTileStyle.list,
                       tileColor: Colors.grey.shade200,
-                      leading: items?.private == true ? Icon(Icons.public) : Icon(Icons.lock),
+                      leading: items?.private == false ? Icon(Icons.public) : Icon(Icons.lock),
                       title: Text("Repo : ${items?.name}"),
                     ),
                   ),
