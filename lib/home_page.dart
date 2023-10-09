@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:git_practice/ex_page.dart';
 import 'package:git_practice/login_page.dart';
 import 'package:git_practice/models/details_model.dart';
 import 'package:git_practice/models/response_model.dart';
-import 'package:git_practice/repo_details_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -124,9 +124,9 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => RepositoryDetails(
+                          builder: (context) => GitHubOAuth()/*RepositoryDetails(
                             projectName: items?.name ?? "",
-                          ),
+                          ),*/
                         ),
                       );
                     },

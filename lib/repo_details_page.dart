@@ -49,34 +49,44 @@ class _RepositoryDetailsState extends State<RepositoryDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: ListView(
-        children: [
-          if (repoDetails != null)
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: repoDetails?.length ?? 0,
-              itemBuilder: (context, index) {
-                final items = repoDetails?[index];
-                return Padding(
-                  padding: EdgeInsets.only(bottom: 5, left: 10, right: 10),
-                  child: InkWell(
-                    onTap: () {},
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                      style: ListTileStyle.list,
-                      tileColor: Colors.grey.shade200,
-                      title: Text("Repo : ${items?.actor?.login}"),
-                      subtitle: Text("Event : ${items?.type}"),
-                    ),
-                  ),
-                );
-              },
-            )
-          else
-            Center(
-              child: CupertinoActivityIndicator(),
-            )
-        ],
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (repoDetails != null)
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: repoDetails?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    final items = repoDetails?[index];
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 5, left: 10, right: 10),
+                      child: InkWell(
+                        onTap: () {},
+                        child: Card(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Repo : ${items?.actor?.login}",style: TextStyle(fontWeight: FontWeight.w500)),
+                                Text("Event : ${items?.type}",style: TextStyle(color: Colors.grey.shade600)),
+                                Text("Created at : ${items?.createdAt}",style: TextStyle(color: Colors.grey.shade600)),
+                              ],
+                            ),
+                          ),
+                        )
+                      ),
+                    );
+                  },
+                ),
+              )
+            else
+              CupertinoActivityIndicator()
+          ],
+        ),
       ),
     );
   }
